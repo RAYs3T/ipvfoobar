@@ -4,5 +4,4 @@ IPvFoo monitors all of your web traffic, in order to present a table of
 connection information.  This information is stored in local RAM, and is
 not transmitted over the network.
 
-If you use the "Look up on bgp.he.net" feature, the selected domain name
-or IP address will be sent to Hurricane Electric via URL request.
+DNS queries are resolved using dns.google. Whois services (when clicked on W-button) are nic.cz and who.is. Clicking on A-button, or R-button, opens ARIN.net and RIPE.net with IP address.
