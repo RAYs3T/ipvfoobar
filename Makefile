@@ -1,5 +1,5 @@
 BUILDDIR := build/
-NAME     := ipvfoo
+NAME     := ipvfoobar
 VERSION  := $(shell cat src/manifest.json | \
               sed -n 's/^ *"version": *"\([0-9.]\+\)".*/\1/p' | \
               head -n1)

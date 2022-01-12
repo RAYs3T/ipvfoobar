@@ -1,4 +1,5 @@
 /*
+Modified in 2022 by Ondrej Vrabel https://vrabel.it/
 Copyright (C) 2011  Paul Marks  http://www.pmarks.net/
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,6 +16,8 @@ limitations under the License.
 */
 
 window.tabId = Number(window.location.hash.substr(1));
+window.hostsCache = {};
+
 if (!isFinite(tabId)) {
   throw "Bad tabId";
 }
@@ -80,6 +83,16 @@ function removeChildren(n) {
     n.removeChild(n.lastChild);
   }
   return n;
+}
+
+// Warning: This will not work for ".co.uk" and similar TLDs!
+const getDomain = host => {
+  return psl.parse(host)?.domain;
+}
+
+function getWhois(domain) {
+  if(domain.endsWith(".cz")) return "https://www.nic.cz/whois/domain/"+encodeURIComponent(getDomain(domain));
+  return "https://who.is/whois/"+encodeURIComponent(getDomain(domain));
 }
 
 // Copy the contents of src into dst, making minimal changes.
@@ -155,9 +168,94 @@ function makeRow(isFirst, tuple) {
   }
   const connectedClass = (flags & FLAG_CONNECTED) ? " highlight" : "";
   addrTd.className = "ipCell" + addrClass + connectedClass;
-  addrTd.appendChild(document.createTextNode(addr));
-  addrTd.onclick = handleClick;
-  addrTd.oncontextmenu = handleContextMenu;
+
+  const addrSpan = document.createElement("span");
+  addrSpan.textContent=addr;
+  addrSpan.onclick = handleClick;
+  addrSpan.oncontextmenu = handleContextMenu;
+
+  let hostDiv = document.createElement("div");
+  hostDiv.style.fontSize = "small";
+
+  const hostSpan= document.createElement("span");
+  
+  
+  let ptr;
+  if(addr.includes(".")){
+    ptr = addr.split(".").reverse().join(".") + ".in-addr.arpa";
+  }else if(addr.includes(":")){
+    ptr = full_IPv6(addr).replaceAll(":","").split("").reverse().join(".")+".ip6.arpa";
+  }else{
+    hostDiv = null;
+  }
+
+  if(ptr){
+    if(typeof window.hostsCache[ptr] === "undefined"){ 
+      hostSpan.textContent="resolving...";
+      fetch("https://dns.google/resolve?name="+ptr+"&type=PTR").then(res => res.json()).then(res => {
+        if(res.Answer && res.Answer[0] && res.Answer[0].data){
+          window.hostsCache[ptr]=res.Answer[0].data.slice(0, -1);
+          hostSpan.textContent=window.hostsCache[ptr];
+        }else{
+          window.hostsCache[ptr]=false;
+          hostDiv.remove();
+          hostDiv = null;
+        }
+      });
+    }else{
+      if(window.hostsCache[ptr]){
+        hostSpan.textContent=window.hostsCache[ptr];
+      }else{
+        hostDiv = null;
+      }
+    }
+  }else{
+    hostDiv = null;
+  }
+
+  if(hostDiv) {
+    hostSpan.onclick = handleClick;
+    hostSpan.oncontextmenu = handleContextMenu;
+
+    hostDiv.appendChild(document.createTextNode(" → "));
+    hostDiv.appendChild(hostSpan);
+  }
+
+
+  addrTd.appendChild(addrSpan);
+  
+  if(ptr && hostDiv) addrTd.appendChild(hostDiv);
+
+
+  const utilsTd = document.createElement("td");
+  utilsTd.className = connectedClass;
+
+
+  const whoisA = document.createElement("a");
+
+  whoisA.href=getWhois(domain);
+  whoisA.textContent="W";
+  whoisA.target="_blank";
+  whoisA.className = "pbtn";
+  whoisA.title = "WHOIS";
+  utilsTd.appendChild(whoisA);
+
+
+  const arinA = document.createElement("a");
+  arinA.href="https://search.arin.net/rdap/?query="+encodeURIComponent(addr);
+  arinA.textContent="A";
+  arinA.target="_blank";
+  arinA.className = "pbtn";
+  arinA.title = "ARIN";
+  utilsTd.appendChild(arinA);
+
+  const ripeA = document.createElement("a");
+  ripeA.href="https://apps.db.ripe.net/db-web-ui/query?searchtext="+encodeURIComponent(addr);
+  ripeA.textContent="R";
+  ripeA.target="_blank";
+  ripeA.className = "pbtn";
+  ripeA.title = "RIPE";
+  utilsTd.appendChild(ripeA);
 
   // Build the (possibly invisible) "WebSocket/Cached" column.
   // We don't need to worry about drawing both, because a cached WebSocket
@@ -181,6 +279,7 @@ function makeRow(isFirst, tuple) {
   tr.appendChild(domainTd);
   tr.appendChild(addrTd);
   tr.appendChild(cacheTd);
+  tr.appendChild(utilsTd);
   return tr;
 }
 
@@ -239,4 +338,41 @@ function selectWholeAddress(node, sel) {
     sel.removeAllRanges();
     sel.addRange(range);
   }
+}
+
+function full_IPv6 (ip_string) {
+  // replace ipv4 address if any
+  var ipv4 = ip_string.match(/(.*:)([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$)/);
+  if (ipv4) {
+      var ip_string = ipv4[1];
+      ipv4 = ipv4[2].match(/[0-9]+/g);
+      for (var i = 0;i < 4;i ++) {
+          var byte = parseInt(ipv4[i],10);
+          ipv4[i] = ("0" + byte.toString(16)).substr(-2);
+      }
+      ip_string += ipv4[0] + ipv4[1] + ':' + ipv4[2] + ipv4[3];
+  }
+
+  // take care of leading and trailing ::
+  ip_string = ip_string.replace(/^:|:$/g, '');
+
+  var ipv6 = ip_string.split(':');
+
+  for (var i = 0; i < ipv6.length; i ++) {
+      var hex = ipv6[i];
+      if (hex != "") {
+          // normalize leading zeros
+          ipv6[i] = ("0000" + hex).substr(-4);
+      }
+      else {
+          // normalize grouped zeros ::
+          hex = [];
+          for (var j = ipv6.length; j <= 8; j ++) {
+              hex.push('0000');
+          }
+          ipv6[i] = hex.join(':');
+      }
+  }
+
+  return ipv6.join(':');
 }

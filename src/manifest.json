@@ -1,10 +1,10 @@
 {
-  "name": "IPvFoo",
+  "name": "IPvFooBar",
   "manifest_version": 2,
-  "version": "1.44",
+  "version": "0.1",
   "minimum_chrome_version": "26",
-  "description": "Display the server IP address, with a realtime summary of IPv4, IPv6, and HTTPS information across all page elements.",
-  "homepage_url": "https://github.com/pmarks-net/ipvfoo",
+  "description": "Display the server IP address, with a realtime summary of IPv4, IPv6, DNS, WHOIS and HTTPS information across all page elements. Fork of IPvFoo (pmarks-net/ipvfoo). Google DNS (dns.google/8.8.8.8) is used for resolving DNS queries.",
+  "homepage_url": "https://github.com/ondrejvrabel/ipvfoo",
   "icons": {
     "16": "icon16.png",
     "128": "icon128.png"
@@ -28,7 +28,7 @@
   ],
   "applications": {
       "gecko": {
-          "id": "ipvfoo@pmarks.net"
+          "id": "ipvfoobar@napr.eu"
       }
   }
 }
