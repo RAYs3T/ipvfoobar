@@ -1,8 +1,6 @@
 BUILDDIR := build/
 NAME     := ipvfoobar
-VERSION  := $(shell cat src/manifest.json | \
-              sed -n 's/^ *"version": *"\([0-9.]\+\)".*/\1/p' | \
-              head -n1)
+VERSION  := 1.0
 
 all: prepare firefox chrome
 
