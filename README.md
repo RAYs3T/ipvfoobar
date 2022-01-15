@@ -1,5 +1,6 @@
-This is a fork.
-Notice: DNS queries are resolved using Google DNS.
+This is a fork of pmarks-net/ipvfoo.
+
+*Notice: DNS queries are resolved using Google DNS.*
 
 Chrome (pending approval): https://chrome.google.com/webstore/detail/iimpkhokkfekbpmoamlmcndclohnehhk
 
