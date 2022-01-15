@@ -1,8 +1,10 @@
 This is a fork.
 Notice: DNS queries are resolved using Google DNS.
 
-Chrome: https://chrome.google.com/webstore/detail/iimpkhokkfekbpmoamlmcndclohnehhk
-Firefox: https://addons.mozilla.org/sk/firefox/addon/ipvfoobar/
+Chrome (pending approval): https://chrome.google.com/webstore/detail/iimpkhokkfekbpmoamlmcndclohnehhk
+
+Firefox (approved): https://addons.mozilla.org/sk/firefox/addon/ipvfoobar/
+
 ---
 
 Original readme below:
