@@ -2,9 +2,9 @@ This is a fork of pmarks-net/ipvfoo.
 
 *Notice: DNS queries are resolved using Google DNS.*
 
-Chrome (pending approval): https://chrome.google.com/webstore/detail/iimpkhokkfekbpmoamlmcndclohnehhk
+Chrome extension: https://chrome.google.com/webstore/detail/ipvfoobar/iimpkhokkfekbpmoamlmcndclohnehhk
 
-Firefox (approved): https://addons.mozilla.org/sk/firefox/addon/ipvfoobar/
+Firefox extension: https://addons.mozilla.org/sk/firefox/addon/ipvfoobar/
 
 ---
 
