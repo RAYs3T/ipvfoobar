@@ -4,7 +4,7 @@ This is a fork of pmarks-net/ipvfoo.
 
 Chrome extension: https://chrome.google.com/webstore/detail/ipvfoobar/iimpkhokkfekbpmoamlmcndclohnehhk
 
-Firefox extension: https://addons.mozilla.org/sk/firefox/addon/ipvfoobar/
+Firefox extension: https://addons.mozilla.org/firefox/addon/ipvfoobar/
 
 ---
 
@@ -21,4 +21,4 @@ https://chrome.google.com/webstore/detail/ecanpcehffngcegjmadlcijfolapggal
 ![Screenshot](/misc/screenshot_webstore_640x400.png?raw=true)
 
 #### Firefox Support:
-IPvFoo now [runs on Firefox](https://addons.mozilla.org/en-US/firefox/addon/ipvfoo-pmarks/), but there are [a few bugs](https://github.com/pmarks-net/ipvfoo/issues/32) to work out.
+IPvFoo now [runs on Firefox](https://addons.mozilla.org/firefox/addon/ipvfoo-pmarks/), but there are [a few bugs](https://github.com/pmarks-net/ipvfoo/issues/32) to work out.
