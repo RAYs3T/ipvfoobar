@@ -1,7 +1,8 @@
 {
-  "name": "IPvFooBar",
+  "name": "IPvFooPlus",
   "manifest_version": 2,
-  "version": "1.0.1",
+  "version": "2.0",
+  "author": "Kevin Urbainczyk",
   "minimum_chrome_version": "26",
   "description": "Display the server IP, with a realtime summary of IPv4, IPv6, DNS, WHOIS and HTTPS info. Fork of IPvFoo. Uses Google DNS.",
   "homepage_url": "https://github.com/ondrejvrabel/ipvfoobar",
@@ -28,5 +29,9 @@
       "gecko": {
           "id": "ipvfoobar@napr.eu"
       }
+  },
+  "developer": {
+    "name": "Kevin Urbainczyk",
+    "url": "https://github.com/RAYs3T"
   }
 }
