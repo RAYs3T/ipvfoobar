@@ -23,7 +23,8 @@
     "storage",
     "webNavigation",
     "webRequest",
-    "<all_urls>"
+    "<all_urls>",
+    "dns"
   ],
   "applications": {
       "gecko": {

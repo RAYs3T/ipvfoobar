@@ -16,7 +16,7 @@ limitations under the License.
 
 const bg = chrome.extension.getBackgroundPage();
 const colorSchemeOptions = ["regularColorScheme", "incognitoColorScheme"];
-
+const dnsResolverUrlOption = "dnsResolverUrl";
 function disableAll(disabled) {
   for (const e of document.getElementsByClassName("disabler")) {
     e.disabled = disabled;
@@ -28,6 +28,8 @@ function copyOptionsToForm() {
     const radio = document.optionsForm[option];
     radio.value = bg.options[option];
   }
+  const dnsResolverUrlText = document.optionsForm[dnsResolverUrlOption]
+  dnsResolverUrlText.value = bg.options[dnsResolverUrlOption];
 }
 
 document.optionsForm.onchange = function(evt) {
@@ -35,6 +37,8 @@ document.optionsForm.onchange = function(evt) {
   for (const option of colorSchemeOptions) {
     options[option] = document.optionsForm[option].value;
   }
+  console.debug("Options UI value resolver: ", document.optionsForm[dnsResolverUrlOption].value)
+  options[dnsResolverUrlOption] = document.optionsForm[dnsResolverUrlOption].value;
   disableAll(true);
   bg.setOptions(options, function() {
     disableAll(false);

@@ -778,6 +778,7 @@ chrome.webRequest.onErrorOccurred.addListener(forgetRequest, FILTER_ALL_URLS);
 const DEFAULT_OPTIONS = {
   regularColorScheme: "darkfg",
   incognitoColorScheme: "lightfg",
+  dnsResolverUrl: ""
 };
 
 function setOptions(newOptions, onDone) {
