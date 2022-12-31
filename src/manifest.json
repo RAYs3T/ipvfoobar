@@ -13,7 +13,6 @@
     "scripts": [ "common.js", "background.js" ]
   },
   "page_action": {
-    "dummy": "http://crbug.com/86449"
   },
   "options_ui": {
     "page": "options.html",

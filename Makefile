@@ -1,6 +1,6 @@
 BUILDDIR := build/
 NAME     := ipvfoobar
-VERSION  := 1.0
+VERSION  := 2.0
 
 all: prepare firefox chrome
 
