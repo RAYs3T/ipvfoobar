@@ -15,9 +15,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
+<link rel="stylesheet" href="material-font-icons/css/materialdesignicons.min.css">
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
+  <span class="mdi mdi-account mdi-flip-h"></span>
+
+  <style type="text/css">
 body {
   margin: 0;
   font-family: serif;
@@ -55,6 +58,29 @@ tr {
 .highlight {
   background-color: #ffff90;
 }
+
+.resolver_used {
+  font-size: 0.7em;
+  opacity: 0.75;
+  text-align: right;
+}
+
+.security-icon {
+
+}
+
+.security-icon-secure {
+
+}
+
+.security-icon-mixed {
+  color: orange;
+}
+
+.security-icon-unsecure {
+  color: red;
+}
+
 .border {
   display: inline-block;
   float: left;
@@ -108,8 +134,8 @@ tr {
   <div id="spill_count_container">
   &#x22ee; <span id="spill_count">0</span> requests omitted
   </div>
-  <div>
-    Using resolver: <span id="doh_resolver">-</span>
+  <div class="resolver_used">
+    DOH Resolver: <span id="doh_resolver">-</span>
   </div>
 </div>
 </body>

@@ -122,9 +122,12 @@ function minimalCopy(src, dst) {
     }
 }
 
-function makeImg(src, title) {
-    const img = document.createElement("img");
-    img.src = src;
+function makeImg(iconClass, securityIconClass, title) {
+    const img = document.createElement("span");
+    img.classList.add("mdi");
+    img.classList.add(iconClass);
+    img.classList.add("security-icon");
+    img.classList.add(securityIconClass)
     img.title = title;
     return img;
 }
@@ -133,16 +136,16 @@ function makeSslImg(flags) {
     switch (flags & (FLAG_SSL | FLAG_NOSSL)) {
         case FLAG_SSL | FLAG_NOSSL:
             return makeImg(
-                "gray_schrodingers_lock.png",
+                "mdi-lock-open-minus", "security-icon-mixed",
                 "Mixture of HTTPS and non-HTTPS connections.");
         case FLAG_SSL:
             return makeImg(
-                "gray_lock.png",
+                "mdi-shield-lock", "security-icon-secure",
                 "Connection uses HTTPS.\n" +
                 "Warning: IPvFoo does not verify the integrity of encryption.");
         default:
             return makeImg(
-                "gray_unlock.png",
+                "mdi-lock-open-alert", "security-icon-unsecure",
                 "Connection does not use HTTPS.");
     }
 }
@@ -210,7 +213,8 @@ function makeRow(isFirst, tuple) {
             fetch(resolvePtrUrl).then(res => res.json()).then(res => {
                 if (res.Answer && res.Answer[0] && res.Answer[0].data) {
                     window.hostsCache[ptr] = res.Answer[0].data.slice(0, -1);
-                    hostSpan.textContent = window.hostsCache[ptr];
+                    var resolvedPtr = window.hostsCache[ptr];
+                    hostSpan.textContent = resolvedPtr;
                 } else {
                     window.hostsCache[ptr] = false;
                     hostDiv.remove();
